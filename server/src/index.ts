@@ -69,9 +69,10 @@ app.use(morgan('dev'));
 // 📂 STATIC FILES
 // Serve Frontend Static Files
 app.use(express.static(path.join(__dirname, '../../dist')));
-// Serve Public Uploads
-app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
-app.use(express.static(path.join(process.cwd(), 'public')));
+// Serve Public Uploads (Robust Path)
+app.use('/uploads', express.static(path.join(__dirname, '../../public/uploads')));
+// Fallback for other public files
+app.use(express.static(path.join(__dirname, '../../public')));
 
 // 🛣️ API ROUTES
 app.use('/api/auth', authRoutes);
