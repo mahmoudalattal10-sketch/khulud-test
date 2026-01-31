@@ -66,15 +66,23 @@ app.use(helmet({
 }));
 app.use(morgan('dev'));
 
-// 📂 STATIC FILES
-// Serve Frontend Static Files
-app.use(express.static(path.join(__dirname, '../../dist')));
-// Serve Public Uploads (Robust Path)
-app.use('/uploads', express.static(path.join(__dirname, '../../public/uploads')));
-// Fallback for other public files
-app.use(express.static(path.join(__dirname, '../../public')));
+// 🔍 DEBUG LOGGING
+app.use((req: any, res: any, next: any) => {
+    console.log(`[REQUEST] ${req.method} ${req.url}`);
+    next();
+});
 
-// 🛣️ API ROUTES
+// ✅ HEALTH CHECK (No DB dependency)
+app.get('/api/health', (req: any, res: Response) => {
+    res.json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        env: process.env.NODE_ENV,
+        db: process.env.DATABASE_URL ? 'configured' : 'missing'
+    });
+});
+
+// 🛣️ API ROUTES (Must be BEFORE static files)
 app.use('/api/auth', authRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/payment', paymentRoutes);
@@ -83,8 +91,16 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/api/notifications', notificationRoutes);
-app.use('/api/hotels', hotelsRoutes); // New Modular Route
+app.use('/api/hotels', hotelsRoutes);
 app.use('/api/rooms', roomRoutes);
+
+// 📂 STATIC FILES
+// Serve Frontend Static Files
+app.use(express.static(path.join(__dirname, '../../dist')));
+// Serve Public Uploads (Robust Path)
+app.use('/uploads', express.static(path.join(__dirname, '../../public/uploads')));
+// Fallback for other public files
+app.use(express.static(path.join(__dirname, '../../public')));
 
 // 📤 UPLOAD ROUTE (Kept simple here or can be moved to dedicated route)
 app.post('/api/upload', uploadConfig.single('image'), (req: any, res: Response) => {
