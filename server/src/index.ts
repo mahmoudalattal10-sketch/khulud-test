@@ -67,6 +67,9 @@ app.use(helmet({
 app.use(morgan('dev'));
 
 // 📂 STATIC FILES
+// Serve Frontend Static Files
+app.use(express.static(path.join(__dirname, '../../dist')));
+// Serve Public Uploads
 app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 app.use(express.static(path.join(process.cwd(), 'public')));
 
@@ -101,6 +104,12 @@ app.post('/api/upload', uploadConfig.single('image'), (req: any, res: Response) 
     const fullUrl = `/uploads${relativePath}`;
 
     res.json({ url: fullUrl, success: true });
+});
+
+// 🌐 Client-Side Routing (Catch-All)
+// Must be after all API routes
+app.get('*', (req: any, res: Response) => {
+    res.sendFile(path.join(__dirname, '../../dist/index.html'));
 });
 
 // START SERVER
