@@ -26,7 +26,7 @@ const CustomersTab: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Add User State
-  const [newUserData, setNewUserData] = useState({ name: '', email: '', phone: '', password: '' });
+  const [newUserData, setNewUserData] = useState({ name: '', email: '', phone: '', password: '', country: '' });
   const [addLoading, setAddLoading] = useState(false);
 
   // Fetch users from API

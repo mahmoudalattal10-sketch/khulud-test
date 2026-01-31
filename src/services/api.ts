@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 /**
  * =========================================================
  * 🚀 DIAFAT API SERVICE - Professional Data Layer
@@ -69,6 +71,7 @@ export interface Hotel {
     rating: number;
     reviews: number;
     basePrice: number;
+    price?: number; // Added for compatibility
     image: string;
     images: string[];
     coords: [number, number];

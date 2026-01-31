@@ -43,7 +43,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
                 cart_description: description,
                 cart_currency: currency,
                 cart_amount: amount,
-                customer_details: customer,
+                customer_details: { ...customer, ip: '127.0.0.1' },
                 callback: callbackUrl,
                 return: returnUrl,
             });

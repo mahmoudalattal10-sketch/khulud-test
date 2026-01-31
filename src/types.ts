@@ -6,6 +6,7 @@ export interface Hotel {
   location: string;
   locationEn: string;
   price: number;
+  basePrice?: number; // Added for compatibility with ApiHotel
   rating: number;
   reviews: number;
   image: string;

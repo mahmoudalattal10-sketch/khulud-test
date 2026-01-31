@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import { Link } from 'react-router-dom';
-import { Hotel } from '../types';
+import { Hotel } from '../services/api';
 
 interface MapSectionProps {
   hotels: Hotel[];

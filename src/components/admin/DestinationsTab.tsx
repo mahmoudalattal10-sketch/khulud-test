@@ -457,7 +457,7 @@ const DestinationsTab: React.FC<DestinationsTabProps> = ({
       // [FIX] Sync lat/lng back to coords string for API
       const hotelToSave = {
         ...editingHotel,
-        distanceFromHaram: (editingHotel.distance || editingHotel.distanceFromHaram || '').trim(),
+        distanceFromHaram: (editingHotel.distance || editingHotel.distanceFromHaram || '').toString().trim(),
       };
 
       // Check if it's a new hotel (ID is a timestamp)
@@ -706,10 +706,10 @@ const DestinationsTab: React.FC<DestinationsTabProps> = ({
   });
 
   const getMapUrl = (hotel: AdminHotel) => {
-    if (hotel.lat && hotel.lng && hotel.lat.trim() !== '' && hotel.lng.trim() !== '') {
-      return `https://maps.google.com/maps?q=${hotel.lat.trim()},${hotel.lng.trim()}&z=16&output=embed`;
+    if (hotel.lat && hotel.lng && String(hotel.lat).trim() !== '' && String(hotel.lng).trim() !== '') {
+      return `https://maps.google.com/maps?q=${String(hotel.lat).trim()},${String(hotel.lng).trim()}&z=16&output=embed`;
     }
-    const query = hotel.mapQuery && hotel.mapQuery.trim() !== '' ? hotel.mapQuery : hotel.name;
+    const query = hotel.mapQuery && String(hotel.mapQuery).trim() !== '' ? hotel.mapQuery : hotel.name;
     return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=16&output=embed`;
   };
 
