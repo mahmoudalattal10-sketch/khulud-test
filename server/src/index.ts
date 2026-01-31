@@ -29,6 +29,9 @@ import couponRoutes from './routes/coupons';
 import notificationRoutes from './routes/notifications';
 import hotelsRoutes from './routes/hotels';
 import roomRoutes from './routes/rooms';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 // Load env
 dotenv.config();
